@@ -1,5 +1,3 @@
-/* Copy all the CSS from main.css and update the imports to use Tailwind if desired */ 
-
 :root {
   --primary-color: #5B21B6;
   --background-color: #F9FAFB;
@@ -34,7 +32,6 @@ body {
   display: flex;
   align-items: center;
   padding: 0 2rem;
-  justify-content: space-between;
 }
 
 .logo a {
