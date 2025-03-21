@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1000Headlines - 1000 Curated Headlines</title>
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <nav class="main-nav">
+        <div class="logo">
+            <a href="/">1000Headlines</a>
+        </div>
+        <div class="nav-links">
+            <a href="/inspiration">Inspiration</a>
+            <a href="/categories">Categories</a>
+            <a href="/templates">Templates</a>
+            <a href="/learn">Learn</a>
+            <a href="/tools">Tools</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/login" class="login-btn">Login</a>
+        </div>
+    </nav>
+
+    <!-- Sidebar Component -->
+    <aside class="sidebar">
+        <h3>Source Types</h3>
+        <ul>
+            <li><a href="/ads/facebook">Facebook Ads <span>(340)</span></a></li>
+            <li><a href="/ads/google">Google Ads <span>(209)</span></a></li>
+            <li><a href="/blog-titles">Blog Headlines <span>(140)</span></a></li>
+            <li><a href="/youtube">YouTube Titles <span>(116)</span></a></li>
+            <li><a href="/magazine">Magazine Headlines <span>(85)</span></a></li>
+            <li><a href="/longform">Long Form Copy <span>(78)</span></a></li>
+        </ul>
+
+        <h3>Industries</h3>
+        <ul>
+            <li><a href="/industry/saas">SaaS <span>(120)</span></a></li>
+            <li><a href="/industry/ecommerce">E-commerce <span>(95)</span></a></li>
+            <li><a href="/industry/finance">Finance <span>(82)</span></a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <!-- Search Section Component -->
+        <section class="search-section">
+            <h1>The Best Advertising Headlines Collection</h1>
+            <p class="subtitle">Discover and get inspired by the most compelling headlines across different platforms
+                and industries.</p>
+
+            <div class="search-filters">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search headlines...">
+                </div>
+
+                <div class="filters">
+                    <select class="platform-filter">
+                        <option>All Platforms</option>
+                        <option>Facebook</option>
+                        <option>Google</option>
+                        <option>YouTube</option>
+                    </select>
+
+                    <select class="industry-filter">
+                        <option>All Industries</option>
+                        <option>SaaS</option>
+                        <option>E-commerce</option>
+                    </select>
+
+                    <select class="sort-by">
+                        <option>Most Recent</option>
+                        <option>Most Popular</option>
+                        <option>Highest Converting</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Headline Grid Component -->
+        <div class="headline-grid">
+            <div class="headline-card">
+                <div class="platform-badge">Facebook Ad</div>
+                <div class="headline-content">
+                    <h3>"How I Generated $1M in Sales Using This One Weird Trick"</h3>
+                    <div class="metadata">
+                        <span class="industry">E-commerce</span>
+                        <span class="date">February 22, 2024</span>
+                    </div>
+                </div>
+                <div class="stats">
+                    <span class="views">2.1K views</span>
+                    <span class="saves">234 saves</span>
+                </div>
+            </div>
+            <!-- You might want to add more headline cards here -->
+        </div>
+    </main>
+</body>
+
+</html>

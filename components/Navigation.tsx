@@ -4,7 +4,7 @@ const Navigation = () => {
   return (
     <nav className="main-nav">
       <div className="logo">
-        <a href="/">HeadlineFolio</a>
+        <a href="/">1000Headlines</a>
       </div>
       <div className="nav-links">
         <a href="/inspiration">Inspiration</a>

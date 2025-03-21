@@ -1,5 +1,5 @@
 {
-  "name": "headlinefolio",
+  "name": "1000headlines",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,8 @@
   "dependencies": {
     "@prisma/client": "^5.0.0",
     "axios": "^1.6.0",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.12.1",
     "next": "15.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

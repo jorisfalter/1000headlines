@@ -1,20 +1,43 @@
 import { NextResponse } from 'next/server';
-import type { Headline } from '@/types';
+import dbConnect from '@/lib/mongodb';
+import Headline from '@/models/Headline';
 
 export async function GET(request: Request) {
-  // In a real app, this would fetch from a database
-  const headlines: Headline[] = [
-    {
-      id: '1',
-      platform: 'Facebook Ad',
-      title: 'How I Generated $1M in Sales Using This One Weird Trick',
-      industry: 'E-commerce',
-      date: 'February 22, 2024',
-      views: 2100,
-      saves: 234,
-    },
-    // Add more headlines...
-  ];
+  try {
+    await dbConnect();
+    
+    // Get query parameters
+    const { searchParams } = new URL(request.url);
+    const platform = searchParams.get('platform');
+    const industry = searchParams.get('industry');
+    const search = searchParams.get('search');
+    
+    // Build query
+    const query: any = {};
+    if (platform && platform !== 'All Platforms') query.platform = platform;
+    if (industry && industry !== 'All Industries') query.industry = industry;
+    if (search) query.title = { $regex: search, $options: 'i' };
 
-  return NextResponse.json(headlines);
+    const headlines = await Headline.find(query)
+      .sort({ createdAt: -1 })
+      .limit(20);
+
+    return NextResponse.json(headlines);
+  } catch (error) {
+    console.error('Database Error:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    await dbConnect();
+    const data = await request.json();
+    
+    const headline = await Headline.create(data);
+    return NextResponse.json(headline, { status: 201 });
+  } catch (error) {
+    console.error('Database Error:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 } 
