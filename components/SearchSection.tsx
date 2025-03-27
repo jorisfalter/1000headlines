@@ -1,7 +1,8 @@
 const SearchSection = () => {
   return (
     <section className="search-section">
-      <h1>The Best Advertising Headlines Collection</h1>
+        <h1>The Best Advertising Headlines Collection,<br></br>
+        Copy, Titles and More</h1>
       <p>Discover and get inspired by the most compelling headlines across different platforms and industries.</p>
 
       <div className="search-filters">
