@@ -7,6 +7,10 @@ primary_region = "ams"
 [env]
   PORT = "8080"
 
+[[http_service.domains]]
+  name = "1000headlines.com"
+  zone_id = "your-cloudflare-zone-id"  # Optional
+
 [http_service]
   internal_port = 8080
   force_https = true
