@@ -13,8 +13,16 @@ RUN npm ci
 # Copy the rest of the application
 COPY . .
 
+# Set environment variables for build
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+ENV MONGODB_URI="mongodb://placeholder-url/1000headlines"
+
 # Build the application
 RUN npm run build
+
+# Remove development dependencies
+RUN npm prune --production
 
 # Expose the port
 EXPOSE 8080
