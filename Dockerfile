@@ -1,5 +1,5 @@
-# Use the official Node.js image
-FROM node:18-slim
+# Use a specific Node.js version
+FROM node:18.19-slim
 
 # Set working directory
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy the rest of the application
 COPY . .
