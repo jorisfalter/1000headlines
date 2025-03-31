@@ -1,10 +1,10 @@
-import { PostHog } from "posthog-node"
+// lib/posthogClient.ts
+import posthog from 'posthog-js';
 
-export default function PostHogClient() {
-  const posthogClient = new PostHog(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-    host: "https://eu.i.posthog.com",
-    flushAt: 1,
-    flushInterval: 0,
-  })
-  return posthogClient
+if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+    api_host: 'https://app.posthog.com', // or your self-hosted instance
+  });
 }
+
+export default posthog;
