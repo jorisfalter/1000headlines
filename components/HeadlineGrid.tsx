@@ -1,57 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React from 'react';
 import HeadlineCard from './HeadlineCard';
-import type { Headline } from '@/types';
 
-interface HeadlineGridProps {
-  platform?: string;
-  industry?: string;
-  search?: string;
+interface Headline {
+  _id: string;
+  headline: string;
+  brand?: string;
+  categories: string[];
+  createdAt: Date;
+  views?: number;
+  saves?: number;
 }
 
-const HeadlineGrid = ({ platform, industry, search }: HeadlineGridProps) => {
-  const [headlines, setHeadlines] = useState<Headline[]>([]);
-  const [loading, setLoading] = useState(true);
+interface HeadlineGridProps {
+  headlines: Headline[];
+}
 
-  useEffect(() => {
-    const fetchHeadlines = async () => {
-      setLoading(true);
-      try {
-        const params = new URLSearchParams();
-        if (platform) params.append('platform', platform);
-        if (industry) params.append('industry', industry);
-        if (search) params.append('search', search);
-
-        const res = await fetch(`/api/headlines?${params}`);
-        const data = await res.json();
-        setHeadlines(data);
-      } catch (error) {
-        console.error('Error fetching headlines:', error);
-      }
-      setLoading(false);
-    };
-
-    fetchHeadlines();
-  }, [platform, industry, search]);
-
-  if (loading) return <div>Loading...</div>;
+export default function HeadlineGrid({ headlines = [] }: HeadlineGridProps) {
+  if (!headlines || headlines.length === 0) {
+    return <div>No headlines found</div>
+  }
 
   return (
-    <div className="headline-grid">
-      {headlines.map(headline => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {headlines.map((headline) => (
         <HeadlineCard
-          key={headline.id}
-          platform={headline.platform}
-          title={headline.title}
-          industry={headline.industry}
-          date={new Date(headline.date).toLocaleDateString()}
-          views={headline.views.toString()}
-          saves={headline.saves.toString()}
+          key={headline._id}
+          headline={headline.headline}
+          brand={headline.brand || ''}
+          categories={headline.categories}
+          date={new Date(headline.createdAt).toLocaleDateString()}
+          views={headline.views?.toString() || '0'}
+          saves={headline.saves?.toString() || '0'}
         />
       ))}
     </div>
   );
-};
-
-export default HeadlineGrid; 
+} 

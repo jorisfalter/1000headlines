@@ -1,17 +1,14 @@
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Navigation from '@/components/Navigation';
 import Sidebar from '@/components/Sidebar';
-import { PostHogProvider } from '@/components/PostHogProvider';
+import { Providers } from '@/components/Providers';
 import './globals.css';
 
-const jakarta = Plus_Jakarta_Sans({ 
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700']
-});
+const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ['latin'] });
 
 export const metadata = {
-  title: '1000Headlines - 1000 Curated Headlines',
-  description: 'Discover and get inspired by the most compelling headlines across different platforms and industries.',
+  title: '1000 Headlines',
+  description: 'A collection of 1000 great headlines',
 };
 
 export default function RootLayout({
@@ -20,13 +17,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={jakarta.className}>
-        <PostHogProvider>
-          <Navigation />
-          <Sidebar />
-          <main>{children}</main>
-        </PostHogProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={plusJakartaSans.className} suppressHydrationWarning>
+        <Providers>
+          <div className="min-h-screen bg-white">
+            <Navigation />
+            <div className="flex">
+              <Sidebar />
+              {children}
+            </div>
+          </div>
+        </Providers>
       </body>
     </html>
   );

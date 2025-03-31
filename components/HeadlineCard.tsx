@@ -1,29 +1,41 @@
 interface HeadlineCardProps {
-  platform: string;
-  title: string;
-  industry: string;
-  date: string;
-  views: string;
-  saves: string;
+  headline: string
+  brand: string
+  categories: string[]
+  date: string
+  views: string
+  saves: string
 }
 
-const HeadlineCard = ({ platform, title, industry, date, views, saves }: HeadlineCardProps) => {
+export default function HeadlineCard({
+  headline,
+  brand,
+  categories,
+  date,
+  views,
+  saves,
+}: HeadlineCardProps) {
   return (
-    <div className="headline-card">
-      <div className="platform-badge">{platform}</div>
-      <div className="headline-content">
-        <h3>{title}</h3>
-        <div className="metadata">
-          <span className="industry">{industry}</span>
-          <span className="date">{date}</span>
+    <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+      <h2 className="text-xl font-semibold mb-3">{headline}</h2>
+      {brand && <p className="text-gray-600 mb-3">{brand}</p>}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {categories.map((category) => (
+          <span
+            key={category}
+            className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600"
+          >
+            {category}
+          </span>
+        ))}
+      </div>
+      <div className="flex justify-between text-sm text-gray-500">
+        <span>{date}</span>
+        <div className="flex gap-4">
+          <span>👁️ {views}</span>
+          <span>💾 {saves}</span>
         </div>
       </div>
-      <div className="stats">
-        <span className="views">{views} views</span>
-        <span className="saves">{saves} saves</span>
-      </div>
     </div>
-  );
-};
-
-export default HeadlineCard; 
+  )
+} 

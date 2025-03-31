@@ -1,43 +1,47 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
-import Headline from '@/models/Headline';
+import Headline from '@/lib/models/Headline';
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     await dbConnect();
-    
-    // Get query parameters
-    const { searchParams } = new URL(request.url);
-    const platform = searchParams.get('platform');
-    const industry = searchParams.get('industry');
-    const search = searchParams.get('search');
-    
-    // Build query
-    const query: any = {};
-    if (platform && platform !== 'All Platforms') query.platform = platform;
-    if (industry && industry !== 'All Industries') query.industry = industry;
-    if (search) query.title = { $regex: search, $options: 'i' };
-
-    const headlines = await Headline.find(query)
-      .sort({ createdAt: -1 })
-      .limit(20);
-
+    const headlines = await Headline.find({}).sort({ createdAt: -1 });
     return NextResponse.json(headlines);
   } catch (error) {
-    console.error('Database Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error('Error fetching headlines:', error);
+    return NextResponse.json(
+      { error: 'Error fetching headlines' },
+      { status: 500 }
+    );
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
     await dbConnect();
-    const data = await request.json();
-    
-    const headline = await Headline.create(data);
-    return NextResponse.json(headline, { status: 201 });
+    const body = await req.json();
+
+    const { headline, brand, categories } = body;
+
+    if (!headline || !brand || !categories || !Array.isArray(categories)) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
+    const newHeadline = await Headline.create({
+      headline,
+      brand,
+      categories
+    });
+
+    return NextResponse.json(newHeadline, { status: 201 });
   } catch (error) {
-    console.error('Database Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error('Error adding headline:', error);
+    return NextResponse.json(
+      { error: 'Error adding headline' },
+      { status: 500 }
+    );
   }
 } 
