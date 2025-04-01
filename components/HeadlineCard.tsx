@@ -3,11 +3,9 @@ interface HeadlineCardProps {
   title: string;
   industry: string;
   date: string;
-  views: string;
-  saves: string;
 }
 
-const HeadlineCard = ({ platform, title, industry, date, views, saves }: HeadlineCardProps) => {
+const HeadlineCard = ({ platform, title, industry, date }: HeadlineCardProps) => {
   return (
     <div className="headline-card">
       <div className="platform-badge">{platform}</div>
@@ -17,10 +15,6 @@ const HeadlineCard = ({ platform, title, industry, date, views, saves }: Headlin
           <span className="industry">{industry}</span>
           <span className="date">{date}</span>
         </div>
-      </div>
-      <div className="stats">
-        <span className="views">{views} views</span>
-        <span className="saves">{saves} saves</span>
       </div>
     </div>
   );
