@@ -189,10 +189,12 @@ body {
   margin-bottom: 1rem;
 }
 
+/* I don't think this one is used */
 .headline-content h3 {
   margin: 0 0 1rem 0;
   font-size: 1.125rem;
   line-height: 1.5;
+  font-weight: 400;
 }
 
 .metadata {
