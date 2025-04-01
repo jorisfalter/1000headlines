@@ -1,11 +1,9 @@
 export interface Headline {
   id: string;
-  platform: string;
-  title: string;
-  industry: string;
-  date: string;
-  views: number;
-  saves: number;
+  media: string;
+  headline: string;
+  brand: string;
+  createdAt: string;
 }
 
 export interface Industry {
