@@ -42,10 +42,10 @@ const HeadlineGrid = ({ platform, industry, search }: HeadlineGridProps) => {
       {headlines.map(headline => (
         <HeadlineCard
           key={headline.id}
-          platform={headline.platform}
-          title={headline.title}
-          industry={headline.industry}
-          date={new Date(headline.date).toLocaleDateString()}
+          platform={headline.media}
+          title={headline.headline}
+          industry={headline.brand}
+          date={new Date(headline.createdAt).toLocaleDateString()}
           views={headline.views.toString()}
           saves={headline.saves.toString()}
         />

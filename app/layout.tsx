@@ -1,7 +1,6 @@
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Navigation from '@/components/Navigation';
 import Sidebar from '@/components/Sidebar';
-import { PostHogProvider } from '@/components/PostHogProvider';
 import './globals.css';
 
 const jakarta = Plus_Jakarta_Sans({ 
@@ -22,11 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={jakarta.className}>
-        <PostHogProvider>
-          <Navigation />
-          <Sidebar />
-          <main>{children}</main>
-        </PostHogProvider>
+        <Navigation />
+        <Sidebar />
+        <main>{children}</main>
       </body>
     </html>
   );
