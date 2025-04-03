@@ -46,6 +46,8 @@ const HeadlineGrid = ({ platform, industry, search }: HeadlineGridProps) => {
           title={headline.headline}
           industry={headline.brand}
           date={new Date(headline.createdAt).toLocaleDateString()}
+          views={headline.views.toString()}
+          saves={headline.saves.toString()}
         />
       ))}
     </div>

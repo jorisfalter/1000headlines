@@ -1,16 +1,40 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
+interface MediaCount {
+  media: string;
+  count: number;
+}
+
 const Sidebar = () => {
+  const [mediaCounts, setMediaCounts] = useState<MediaCount[]>([]);
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const res = await fetch('/api/headlines/count');
+        const data = await res.json();
+        setMediaCounts(data);
+      } catch (error) {
+        console.error('Error fetching counts:', error);
+      }
+    };
+
+    fetchCounts();
+  }, []);
+
   return (
     <aside className="sidebar">
       <h3>Source Types</h3>
       <ul>
-        <li><a href="/ads/facebook">Facebook Ads <span>(340)</span></a></li>
-        <li><a href="/ads/google">Google Ads <span>(209)</span></a></li>
-        <li><a href="/blog-titles">Blog Headlines <span>(140)</span></a></li>
-        <li><a href="/youtube">YouTube Titles <span>(116)</span></a></li>
-        <li><a href="/magazine">Magazine Headlines <span>(85)</span></a></li>
-        <li><a href="/longform">Long Form Copy <span>(78)</span></a></li>
+        {mediaCounts.map(({ media, count }) => (
+          <li key={media}>
+            <a href={`/media/${media.toLowerCase().replace(' ', '-')}`}>
+              {media} <span>({count})</span>
+            </a>
+          </li>
+        ))}
       </ul>
 
       <h3>Industries</h3>
