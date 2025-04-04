@@ -19,8 +19,7 @@ export async function GET(request: Request) {
     if (search) query.title = { $regex: search, $options: 'i' };
 
     const headlines = await Headline.find(query)
-      .sort({ createdAt: -1 })
-      .limit(20);
+      .sort({ createdAt: -1 });
 
     return NextResponse.json(headlines);
   } catch (error) {
