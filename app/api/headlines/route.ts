@@ -14,9 +14,11 @@ export async function GET(request: Request) {
     
     // Build query
     const query: any = {};
-    if (platform && platform !== 'All Platforms') query.platform = platform;
+    if (platform && platform !== 'All Platforms') query.media = platform;
     if (industry && industry !== 'All Industries') query.industry = industry;
     if (search) query.title = { $regex: search, $options: 'i' };
+
+    console.log('Query:', query);
 
     const headlines = await Headline.find(query)
       .sort({ createdAt: -1 });

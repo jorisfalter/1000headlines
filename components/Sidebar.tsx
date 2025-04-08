@@ -30,7 +30,7 @@ const Sidebar = () => {
       <ul>
         {mediaCounts.map(({ media, count }) => (
           <li key={media}>
-            <a href={`/media/${media.toLowerCase().replace(' ', '-')}`}>
+            <a href={`/media?type=${media.toLowerCase().replace(/ /g, '-')}`}>
               {media} <span>({count})</span>
             </a>
           </li>

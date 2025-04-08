@@ -23,8 +23,13 @@ const HeadlineGrid = ({ platform, industry, search }: HeadlineGridProps) => {
         if (industry) params.append('industry', industry);
         if (search) params.append('search', search);
 
+        console.log('Fetching with params:', params.toString()); // Debug log
+
         const res = await fetch(`/api/headlines?${params}`);
         const data = await res.json();
+        
+        console.log('Received headlines:', data); // Debug log
+        
         setHeadlines(data);
       } catch (error) {
         console.error('Error fetching headlines:', error);
@@ -36,6 +41,7 @@ const HeadlineGrid = ({ platform, industry, search }: HeadlineGridProps) => {
   }, [platform, industry, search]);
 
   if (loading) return <div>Loading...</div>;
+  if (!headlines.length) return <div>No headlines found</div>;
 
   return (
     <div className="headline-grid">
