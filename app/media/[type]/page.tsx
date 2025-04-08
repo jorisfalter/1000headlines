@@ -25,9 +25,9 @@ export default function MediaPage({ params }: PageProps) {
   
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8 px-8 pt-8">
+      {/* <h1 className="text-3xl font-bold mb-8 px-8 pt-8">
         {mediaType} Headlines
-      </h1>
+      </h1> */}
       <HeadlineGrid platform={mediaType} />
     </div>
   );

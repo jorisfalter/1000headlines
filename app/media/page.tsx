@@ -1,4 +1,5 @@
 import HeadlineGrid from '@/components/HeadlineGrid';
+import SearchSection from '@/components/SearchSection';
 
 interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -25,10 +26,13 @@ export default function MediaPage({ searchParams }: PageProps) {
   
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8 px-8 pt-8">
-        {mediaType} Headlines
-      </h1>
-      <HeadlineGrid platform={mediaType} />
+      <SearchSection />
+      <div className="content-section">
+        {/* <h1 className="text-3xl font-bold mb-8 px-8 pt-8">
+          {mediaType} Headlines
+        </h1> */}
+        <HeadlineGrid platform={mediaType} />
+      </div>
     </div>
   );
 } 
