@@ -5,7 +5,7 @@ interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-function formatMediaType(type: string) {
+function formatMediaType(type: string = '') {
   return type.split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
@@ -13,16 +13,18 @@ function formatMediaType(type: string) {
 
 export async function generateMetadata({ searchParams }: PageProps) {
   const type = String(searchParams.type || '');
-  const title = formatMediaType(type);
+  const title = type ? `${formatMediaType(type)} Headlines - 1000Headlines` : '1000Headlines';
   return {
-    title: `${title} Headlines - 1000Headlines`,
-    description: `Collection of the best ${title} headlines and advertising examples.`
+    title,
+    description: type 
+      ? `Collection of the best ${formatMediaType(type)} headlines and advertising examples.`
+      : 'Discover and get inspired by the most compelling headlines across different platforms and industries.'
   };
 }
 
 export default function MediaPage({ searchParams }: PageProps) {
   const type = String(searchParams.type || '');
-  const mediaType = formatMediaType(type);
+  const mediaType = type ? formatMediaType(type) : '';
   
   return (
     <div>
