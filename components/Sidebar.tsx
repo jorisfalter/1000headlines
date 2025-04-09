@@ -48,12 +48,12 @@ const Sidebar = () => {
         )}
       </ul>
 
-      <h3>Industries</h3>
+      {/* <h3>Industries</h3>
       <ul>
         <li><a href="/industry/saas">SaaS <span>(120)</span></a></li>
         <li><a href="/industry/ecommerce">E-commerce <span>(95)</span></a></li>
         <li><a href="/industry/finance">Finance <span>(82)</span></a></li>
-      </ul>
+      </ul> */}
     </aside>
   );
 };
