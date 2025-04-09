@@ -2,7 +2,7 @@ import HeadlineGrid from '@/components/HeadlineGrid';
 
 interface PageProps {
   params: {
-    type: Promise<string> | string;
+    type: string;
   };
 }
 
@@ -13,7 +13,7 @@ function formatMediaType(type: string) {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const title = formatMediaType(String(params.type));
+  const title = formatMediaType(params.type);
   return {
     title: `${title} Headlines - 1000Headlines`,
     description: `Collection of the best ${title} headlines and advertising examples.`
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default function MediaPage({ params }: PageProps) {
-  const mediaType = formatMediaType(String(params.type));
+  const mediaType = formatMediaType(params.type);
   
   return (
     <div>
