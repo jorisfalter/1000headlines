@@ -4,7 +4,13 @@ const HeadlineSchema = new mongoose.Schema({
   platform: {
     type: String,
     required: true,
-    enum: ['Facebook Ad', 'Google Ad', 'Blog Headline', 'YouTube Title', 'Magazine Headline', 'Long Form Copy']
+    enum: [
+      'Print',
+      'Facebook Ad',
+      'Blog',
+      'Billboard',
+      'Google Search Results'
+    ]
   },
   title: {
     type: String,
