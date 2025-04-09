@@ -16,7 +16,14 @@ const headlineSchema = new mongoose.Schema({
   media: {
     type: String,
     required: true,
-    enum: ["Print", "Facebook Ad", "Instagram Ad", "Blog", "Billboard"], // Changed to match CSV case
+    enum: [
+      "Print",
+      "Facebook Ad",
+      "Instagram Ad",
+      "Blog",
+      "Billboard",
+      "Google Search Results",
+    ],
   },
   createdAt: {
     type: Date,
@@ -34,11 +41,18 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 // Function to upload a headline
-async function uploadHeadline(headlineData) {
+async function uploadHeadline(headline) {
   try {
-    const headline = new Headline(headlineData);
-    await headline.save();
-    console.log("Headline uploaded successfully:", headline);
+    const headlineDoc = {
+      headline: headline.headline,
+      media: headline.platform,
+      brand: headline.brand,
+      createdAt: new Date(),
+    };
+
+    const response = await Headline.create(headlineDoc);
+    console.log("✓ Uploaded:", headline.headline.substring(0, 50) + "...");
+    return response;
   } catch (error) {
     console.error("Error uploading headline:", error);
   }
@@ -81,7 +95,7 @@ async function uploadAndTerminate(csvFilePath) {
 // Update the CSV parsing function to handle Excel/Table exports
 async function readHeadlinesFromCsv(filepath) {
   return new Promise((resolve, reject) => {
-    console.log(`Attempting to read CSV from: ${filepath}`);
+    console.log(`Reading CSV from: ${filepath}`);
 
     if (!fs.existsSync(filepath)) {
       console.error(`File not found: ${filepath}`);
@@ -96,33 +110,37 @@ async function readHeadlinesFromCsv(filepath) {
           columns: true,
           trim: true,
           skipEmptyLines: true,
-          relax_column_count: true,
-          skip_records_with_empty_values: true,
           delimiter: ",",
         })
       )
       .on("data", (row) => {
-        console.log("Processing row:", row); // Debug log
-        // Only process rows that have the required fields
-        if (row.Headline && row.Media) {
+        // Simple debug log to see what we're getting
+        console.log("CSV Column Names:", Object.keys(row));
+        console.log("Row Data:", row);
+
+        // Try to find the right fields
+        const headline = row.headline || row.Headline || row.title || row.Title;
+        const platform = row.media || row.Media || row.platform || row.Platform;
+        const brand =
+          row.brand || row.Brand || row.company || row.Company || "";
+
+        if (headline && platform) {
           headlines.push({
-            headline: row.Headline.trim(),
-            brand: row.Brand ? row.Brand.trim() : "",
-            media: row.Media.trim(),
+            headline: headline.trim(),
+            brand: brand.trim(),
+            platform: platform.trim(),
             createdAt: new Date(),
           });
         } else {
-          console.log("Skipping row - missing required fields:", row);
+          console.log("Missing required fields in row:", row);
         }
       })
       .on("end", () => {
-        console.log(
-          `Finished reading CSV. Found ${headlines.length} valid headlines.`
-        );
+        console.log(`Found ${headlines.length} valid headlines`);
         resolve(headlines);
       })
       .on("error", (error) => {
-        console.error("Error reading CSV:", error);
+        console.error("CSV parsing error:", error);
         reject(error);
       });
   });
