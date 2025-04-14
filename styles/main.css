@@ -122,7 +122,7 @@ body {
 }
 
 /* Search section styles */
-.search-section {
+/* .search-section {
   padding: 2rem;
 }
 
@@ -134,18 +134,18 @@ body {
 
 .search-filters {
   margin: 2rem 0;
-}
+} */
 
-.search-bar input {
+/* .search-bar input {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 1rem;
   margin-bottom: 1rem;
-}
+} */
 
-.filters {
+/* .filters {
   display: flex;
   gap: 1rem;
 }
@@ -156,10 +156,10 @@ body {
   border-radius: 6px;
   background: white;
   min-width: 150px;
-}
+} */
 
 /* Headline grid styles */
-.headline-grid {
+/* .headline-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
@@ -177,7 +177,7 @@ body {
 .headline-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
+} */
 
 .platform-badge {
   display: inline-block;

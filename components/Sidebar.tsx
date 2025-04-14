@@ -31,7 +31,7 @@ const Sidebar = () => {
 
   return (
     <aside className="sidebar">
-      <h3>Source Types</h3>
+      <h3>Headline Type</h3>
       <ul>
         {isLoading ? (
           <li>Loading...</li>
