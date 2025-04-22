@@ -1,34 +1,22 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const SearchSection = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('All Types');
+  const router = useRouter();
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    try {
-      const params = new URLSearchParams();
-      if (searchTerm) params.append('search', searchTerm);
-      if (selectedType !== 'All Types') params.append('platform', selectedType);
-      
-      // Update URL with search params
-      window.history.pushState(
-        {}, 
-        '', 
-        `${window.location.pathname}?${params.toString()}`
-      );
-      
-      // Trigger search
-      const event = new CustomEvent('searchUpdate', { 
-        detail: { search: searchTerm, platform: selectedType } 
-      });
-      window.dispatchEvent(event);
-    } catch (error) {
-      console.error('Search error:', error);
-    }
+    const params = new URLSearchParams();
+    if (searchTerm) params.append('search', searchTerm);
+    if (selectedType !== 'All Types') params.append('type', selectedType.toLowerCase().replace(/ /g, '-'));
+    
+    // Trigger search by updating URL
+    router.push(`/?${params.toString()}`);
   };
 
   return (
