@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     'Discover and get inspired by the most compelling headlines across different platforms and industries.',
 };
 
+// Add dynamic flag to prevent static prerendering
+export const dynamic = 'force-dynamic';
+
 export default function MediaPage() {
   return (
     <div className="page-container">
