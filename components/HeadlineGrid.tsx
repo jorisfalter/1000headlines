@@ -14,31 +14,38 @@ const HeadlineGrid = ({ platform, industry, search }: HeadlineGridProps) => {
   const [headlines, setHeadlines] = useState<Headline[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchHeadlines = async (params: URLSearchParams) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/headlines?${params}`);
+      const data = await res.json();
+      setHeadlines(data);
+    } catch (error) {
+      console.error('Error fetching headlines:', error);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchHeadlines = async () => {
-      setLoading(true);
-      try {
-        const params = new URLSearchParams();
-        if (platform) params.append('platform', platform);
-        if (industry) params.append('industry', industry);
-        if (search) params.append('search', search);
-
-        console.log('Fetching with params:', params.toString()); // Debug log
-
-        const res = await fetch(`/api/headlines?${params}`);
-        const data = await res.json();
-        
-        console.log('Received headlines:', data); // Debug log
-        
-        setHeadlines(data);
-      } catch (error) {
-        console.error('Error fetching headlines:', error);
-      }
-      setLoading(false);
+    // Listen for search updates from SearchSection
+    const handleSearch = (event: CustomEvent) => {
+      const { search, platform } = event.detail;
+      const params = new URLSearchParams();
+      if (search) params.append('search', search);
+      if (platform !== 'All Types') params.append('platform', platform);
+      fetchHeadlines(params);
     };
 
-    fetchHeadlines();
-  }, [platform, industry, search]);
+    window.addEventListener('searchUpdate', handleSearch as EventListener);
+    
+    // Initial fetch
+    const params = new URLSearchParams(window.location.search);
+    fetchHeadlines(params);
+
+    return () => {
+      window.removeEventListener('searchUpdate', handleSearch as EventListener);
+    };
+  }, []);
 
   if (loading) return <div>Loading...</div>;
   if (!headlines.length) return <div>No headlines found</div>;
