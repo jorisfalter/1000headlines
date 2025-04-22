@@ -1,31 +1,23 @@
-# Use a specific Node.js version
-FROM node:18.19-slim
-
-# Set working directory
+# Stage 1: Install dependencies and build
+FROM node:18-alpine AS builder
 WORKDIR /app
-
-# Copy package files
 COPY package*.json ./
-
-# Install dependencies
-RUN npm ci
-
-# Copy the rest of the application
+RUN npm install
 COPY . .
-
-# Set environment variables for build
-ENV NEXT_TELEMETRY_DISABLED=1
-ENV NODE_ENV=production
-ENV MONGODB_URI="mongodb://placeholder-url/1000headlines"
-
-# Build the application
 RUN npm run build
 
-# Remove development dependencies
-RUN npm prune --production
+# Stage 2: Run the application
+FROM node:18-alpine AS runner
+WORKDIR /app
 
-# Expose the port
-EXPOSE 8080
+ENV NODE_ENV production
 
-# Start the application
-CMD ["npm", "start"] 
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+EXPOSE 3000
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+CMD ["node", "server.js"] 

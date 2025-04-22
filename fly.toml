@@ -4,20 +4,29 @@ primary_region = "ams"
 [build]
   dockerfile = "Dockerfile"
 
-[env]
-  PORT = "8080"
-
-[[http_service.domains]]
-  name = "1000headlines.com"
-  zone_id = "your-cloudflare-zone-id"  # Optional
-
 [http_service]
-  internal_port = 8080
+  internal_port = 3000
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
   processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  path = "/health"
+  port = 3000
+  timeout = "5s"
+  type = "http"
+
+[env]
+  PORT = "3000"
+
+[[http_service.domains]]
+  name = "1000headlines.com"
+  zone_id = "your-cloudflare-zone-id"  # Optional
 
 [[vm]]
   cpu_kind = "shared"
