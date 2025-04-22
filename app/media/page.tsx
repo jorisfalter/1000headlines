@@ -7,14 +7,11 @@ function formatMediaType(type: string = '') {
     .join(' ');
 }
 
-// Update the type definition for the page props
-type Props = {
-  searchParams: { [key: string]: string | string[] | undefined }
-  params: { slug?: string }
-}
-
-export async function generateMetadata({ searchParams = {} }: Props): Promise<Metadata> {
-  const type = typeof searchParams.type === 'string' ? searchParams.type : '';
+// Use Next.js built-in types
+export async function generateMetadata(
+  { searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }
+): Promise<Metadata> {
+  const type = typeof searchParams?.type === 'string' ? searchParams.type : '';
   const title = type ? `${formatMediaType(type)} Headlines - 1000Headlines` : '1000Headlines';
   
   return {
@@ -25,8 +22,10 @@ export async function generateMetadata({ searchParams = {} }: Props): Promise<Me
   };
 }
 
-export default function MediaPage({ searchParams = {} }: Props) {
-  const type = typeof searchParams.type === 'string' ? searchParams.type : '';
+export default function MediaPage(
+  { searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }
+) {
+  const type = typeof searchParams?.type === 'string' ? searchParams.type : '';
   const formattedType = formatMediaType(type);
 
   return (
