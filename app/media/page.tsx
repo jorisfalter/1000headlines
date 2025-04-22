@@ -24,19 +24,20 @@ export async function generateMetadata({ searchParams = Promise.resolve({}) }: P
   };
 }
 
-export default async function MediaPage({ searchParams = Promise.resolve({}) }: PageProps) {
-  const params = await searchParams;
-  const type = params.type || '';
-  const mediaType = type ? formatMediaType(type) : '';
-  
+export default function MediaPage({
+  searchParams,
+}: {
+  searchParams: { type: string };
+}) {
+  const mediaType = searchParams.type;
+
   return (
-    <div>
-      <SearchSection />
-      <div className="content-section">
-        {/* <h1 className="text-3xl font-bold mb-8 px-8 pt-8">
+    <div className="page-container">
+      <div className="content-area">
+        {/* <h1 className="text-2xl font-bold mb-4">
           {mediaType} Headlines
         </h1> */}
-        <HeadlineGrid platform={mediaType} />
+        <HeadlineGrid />
       </div>
     </div>
   );
