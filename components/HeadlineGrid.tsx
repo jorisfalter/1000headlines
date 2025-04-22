@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import HeadlineCard from './HeadlineCard';
 import type { Headline } from '@/types';
 
-const HeadlineGrid = () => {
+export default function HeadlineGrid() {
   const [headlines, setHeadlines] = useState<Headline[]>([]);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
@@ -26,7 +26,7 @@ const HeadlineGrid = () => {
     fetchHeadlines();
   }, [searchParams]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Loading headlines...</div>;
   if (!headlines.length) return <div>No headlines found</div>;
 
   return (
@@ -42,6 +42,4 @@ const HeadlineGrid = () => {
       ))}
     </div>
   );
-};
-
-export default HeadlineGrid; 
+} 

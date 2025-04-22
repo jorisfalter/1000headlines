@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import HeadlineGrid from '@/components/HeadlineGrid';
 import { Metadata } from 'next';
 
@@ -22,7 +23,9 @@ export default function MediaPage() {
   return (
     <div className="page-container">
       <div className="content-area">
-        <HeadlineGrid />
+        <Suspense fallback={<div>Loading...</div>}>
+          <HeadlineGrid />
+        </Suspense>
       </div>
     </div>
   );
