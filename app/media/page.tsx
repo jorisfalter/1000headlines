@@ -1,9 +1,8 @@
 import HeadlineGrid from '@/components/HeadlineGrid';
-import SearchSection from '@/components/SearchSection';
 import { Metadata } from 'next';
 
 interface PageProps {
-  searchParams?: Promise<{ [key: string]: string | undefined }>;
+  searchParams: { type?: string };
 }
 
 function formatMediaType(type: string = '') {
@@ -12,10 +11,10 @@ function formatMediaType(type: string = '') {
     .join(' ');
 }
 
-export async function generateMetadata({ searchParams = Promise.resolve({}) }: PageProps): Promise<Metadata> {
-  const params = await searchParams;
-  const type = params.type || '';
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const type = searchParams.type || '';
   const title = type ? `${formatMediaType(type)} Headlines - 1000Headlines` : '1000Headlines';
+  
   return {
     title,
     description: type 
@@ -24,18 +23,15 @@ export async function generateMetadata({ searchParams = Promise.resolve({}) }: P
   };
 }
 
-export default function MediaPage({
-  searchParams,
-}: {
-  searchParams: { type: string };
-}) {
-  const mediaType = searchParams.type;
+export default function MediaPage({ searchParams }: PageProps) {
+  const mediaType = searchParams.type || '';
+  const formattedType = formatMediaType(mediaType);
 
   return (
     <div className="page-container">
       <div className="content-area">
         {/* <h1 className="text-2xl font-bold mb-4">
-          {mediaType} Headlines
+          {formattedType} Headlines
         </h1> */}
         <HeadlineGrid />
       </div>
