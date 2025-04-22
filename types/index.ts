@@ -16,4 +16,12 @@ export interface Platform {
   id: string;
   name: string;
   count: number;
-} 
+}
+
+export type MediaType = 
+  | 'Print'
+  | 'Facebook Ad'
+  | 'Google Ad'
+  | 'Blog'
+  | 'Billboard'
+  | 'Google Search Results'; 

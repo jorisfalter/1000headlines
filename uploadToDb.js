@@ -20,6 +20,7 @@ const headlineSchema = new mongoose.Schema({
       "Print",
       "Facebook Ad",
       "Instagram Ad",
+      "Google Ad",
       "Blog",
       "Billboard",
       "Google Search Results",

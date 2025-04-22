@@ -50,6 +50,7 @@ const SearchSection = () => {
             <option>All Types</option>
             <option>Print</option>
             <option>Facebook Ad</option>
+            <option>Google Ad</option>
             <option>Blog</option>
             <option>Billboard</option>
             <option>Google Search Results</option>

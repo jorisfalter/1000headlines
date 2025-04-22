@@ -7,6 +7,7 @@ const HeadlineSchema = new mongoose.Schema({
     enum: [
       'Print',
       'Facebook Ad',
+      'Google Ad',
       'Blog',
       'Billboard',
       'Google Search Results'
