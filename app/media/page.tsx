@@ -9,8 +9,8 @@ function formatMediaType(type: string = '') {
 
 // Update the type definition for the page props
 type Props = {
-  searchParams?: { [key: string]: string | string[] | undefined }
-  params?: { [key: string]: string | string[] }
+  searchParams: { [key: string]: string | string[] | undefined }
+  params: { slug?: string }
 }
 
 export async function generateMetadata({ searchParams = {} }: Props): Promise<Metadata> {
