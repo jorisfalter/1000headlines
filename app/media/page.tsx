@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 // ✅ Explicitly ignore route props to stop type inference
 // @ts-expect-error suppress Next.js type conflict caused by build cache
-export default function MediaPage(_props: never) {
+export default function MediaPage() {
   return (
     <div className="page-container">
       <div className="content-area">
