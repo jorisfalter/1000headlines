@@ -47,11 +47,23 @@ body {
   box-sizing: border-box;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 8px 0; /* Added padding to give some space */
+}
+
 .logo a {
-  color: black;
-  font-weight: 700;
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
   text-decoration: none;
+}
+
+.logo-image {
+  max-height: 100%;
+  width: auto;
 }
 
 .nav-links {

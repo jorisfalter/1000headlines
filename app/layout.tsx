@@ -11,6 +11,12 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata = {
   title: '1000Headlines - 1000 Curated Headlines',
   description: 'Discover and get inspired by the most compelling headlines across different platforms and industries.',
+  icons: {
+    icon: '/favicon.ico',
+    // Optional additional sizes
+    // apple: '/apple-icon.png',
+    // shortcut: '/favicon-16x16.png',
+  },
 };
 
 export default function RootLayout({
