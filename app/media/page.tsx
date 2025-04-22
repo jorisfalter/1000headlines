@@ -7,13 +7,16 @@ function formatMediaType(type: string = '') {
     .join(' ');
 }
 
-// Use Next.js built-in types
+type PageProps = {
+  searchParams?: { [key: string]: string | string[] };
+};
+
 export async function generateMetadata(
-  { searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }
+  props: PageProps
 ): Promise<Metadata> {
-  const type = typeof searchParams?.type === 'string' ? searchParams.type : '';
+  const type = typeof props.searchParams?.type === 'string' ? props.searchParams.type : '';
   const title = type ? `${formatMediaType(type)} Headlines - 1000Headlines` : '1000Headlines';
-  
+
   return {
     title,
     description: type 
@@ -22,10 +25,8 @@ export async function generateMetadata(
   };
 }
 
-export default function MediaPage(
-  { searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }
-) {
-  const type = typeof searchParams?.type === 'string' ? searchParams.type : '';
+export default function MediaPage(props: PageProps) {
+  const type = typeof props.searchParams?.type === 'string' ? props.searchParams.type : '';
   const formattedType = formatMediaType(type);
 
   return (
@@ -38,4 +39,4 @@ export default function MediaPage(
       </div>
     </div>
   );
-} 
+}
