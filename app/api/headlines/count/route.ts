@@ -6,19 +6,15 @@ export async function GET() {
   try {
     await dbConnect();
     
-    // Add debug logging
-    const total = await Headline.countDocuments();
-    console.log('Total headlines:', total);
-
     const counts = await Headline.aggregate([
       {
         $match: {
-          media: { $ne: null } // Changed from platform to media
+          media: { $exists: true, $ne: null }
         }
       },
       {
         $group: {
-          _id: '$media', // Changed from platform to media
+          _id: '$media',
           count: { $sum: 1 }
         }
       },
@@ -34,7 +30,7 @@ export async function GET() {
       }
     ]);
 
-    console.log('Media counts:', counts); // Debug log
+    console.log('Media type counts:', counts);
     return NextResponse.json(counts);
   } catch (error) {
     console.error('Database Error:', error);

@@ -7,14 +7,13 @@ export async function GET(request: Request) {
     await dbConnect();
     
     const { searchParams } = new URL(request.url);
-    const platform = searchParams.get('platform');
+    const type = searchParams.get('type');
     const search = searchParams.get('search');
     
-    // First, let's log a sample document to see the structure
-    const sampleDoc = await Headline.findOne();
-    console.log('Sample document structure:', sampleDoc);
-
     let pipeline: any[] = [];
+
+    const mediaType = type ? type.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : null;
+    console.log('Searching for media type:', mediaType);
 
     if (search) {
       pipeline.push({
@@ -22,53 +21,35 @@ export async function GET(request: Request) {
           index: 'default',
           text: {
             query: search,
-            path: ['headline', 'brand', 'media'],  // Changed to match DB fields
+            path: ['headline', 'brand', 'media'],
             fuzzy: {
               maxEdits: 1
             }
           }
         }
       });
+    }
 
+    if (mediaType) {
       pipeline.push({
-        $project: {
-          headline: 1,    // Changed to match DB fields
-          brand: 1,
-          media: 1,      // Changed from platform to media
-          createdAt: 1,
-          score: { $meta: "searchScore" }
-        }
+        $match: { media: mediaType }
       });
     }
 
-    if (platform && platform !== 'All Types') {
-      pipeline.push({
-        $match: { media: platform }  // Changed from platform to media
-      });
+    if (pipeline.length === 0) {
+      const query = mediaType ? { media: mediaType } : {};
+      const headlines = await Headline.find(query).sort({ createdAt: -1 });
+      return NextResponse.json(headlines);
     }
 
     pipeline.push({ $sort: { createdAt: -1 } });
 
-    console.log('Search query:', search);
-    console.log('Media filter:', platform);
-    console.log('Pipeline:', JSON.stringify(pipeline, null, 2));
-
-    if (pipeline.length === 0) {
-      const headlines = await Headline.find().sort({ createdAt: -1 });
-      console.log('Found headlines (find):', headlines.length);
-      return NextResponse.json(headlines);
-    }
-
     const headlines = await Headline.aggregate(pipeline);
-    console.log('Found headlines (search):', headlines.length);
-    console.log('Sample result:', headlines[0]);
+    console.log(`Found ${headlines.length} headlines for type: ${mediaType}`);
 
     return NextResponse.json(headlines);
-  } catch (error: unknown) {
+  } catch (error) {
     console.error('Database Error:', error);
-    if (error instanceof Error) {
-      console.error('Error details:', error.message);
-    }
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
