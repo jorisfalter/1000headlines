@@ -15,8 +15,6 @@ export const metadata: Metadata = {
     'Discover and get inspired by the most compelling headlines across different platforms and industries.',
 };
 
-// ✅ Explicitly ignore route props to stop type inference
-// @ts-expect-error suppress Next.js type conflict caused by build cache
 export default function MediaPage() {
   return (
     <div className="page-container">
