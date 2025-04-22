@@ -1,18 +1,19 @@
 import HeadlineGrid from '@/components/HeadlineGrid';
 import { Metadata } from 'next';
 
-interface PageProps {
-  searchParams: { type?: string };
-}
-
 function formatMediaType(type: string = '') {
   return type.split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
 
-export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
-  const type = searchParams.type || '';
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const type = typeof searchParams.type === 'string' ? searchParams.type : '';
   const title = type ? `${formatMediaType(type)} Headlines - 1000Headlines` : '1000Headlines';
   
   return {
@@ -23,9 +24,9 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
   };
 }
 
-export default function MediaPage({ searchParams }: PageProps) {
-  const mediaType = searchParams.type || '';
-  const formattedType = formatMediaType(mediaType);
+export default function MediaPage({ searchParams }: Props) {
+  const type = typeof searchParams.type === 'string' ? searchParams.type : '';
+  const formattedType = formatMediaType(type);
 
   return (
     <div className="page-container">
