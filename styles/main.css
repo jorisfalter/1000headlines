@@ -215,7 +215,7 @@ body {
 }
 
 /* Main content styles */
-main {
+/* main {
   flex: 1;
   margin-left: 250px;
   padding-top: 64px;
@@ -223,7 +223,7 @@ main {
   min-height: 100vh;
   position: relative;
   z-index: 1;
-}
+} */
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
