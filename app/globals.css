@@ -250,7 +250,7 @@ body {
 /* Main content styles */
 main {
   margin-left: 125px;
-  padding-top: 64px;
+  padding-top: 32px;
   flex: 1;
   min-height: calc(100vh - 64px);
   background: var(--background-color);
