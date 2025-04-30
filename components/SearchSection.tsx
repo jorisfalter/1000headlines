@@ -22,7 +22,7 @@ const SearchSection = () => {
   return (
     <section className="search-section w-[95%] max-w-3xl mx-auto py-8">
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
-        The Best Advertising Headlines Collection,
+        The Best Advertising Headlines,
         <br className="hidden md:block" />
         Titles and More
       </h1>
